@@ -1,2 +1,2 @@
 # smart
-## Just for test
+## Just another Chinese segment in Python
