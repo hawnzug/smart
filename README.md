@@ -1,2 +1,3 @@
-# smart
-## Just another Chinese segment in Python
+# Smart
+## Just another Chinese word segmentation in Python
+
