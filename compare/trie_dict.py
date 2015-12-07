@@ -1,6 +1,10 @@
-trie = {}
+# -*- coding: utf-8 -*-
+import dict_data
+TRIE = dict_data.TRIE
+
+
 def trie_add(word, prob):
-    ref = trie
+    ref = TRIE
     for char in word:
         if char not in ref:
             ref[char] = {}
@@ -8,23 +12,16 @@ def trie_add(word, prob):
     ref[''] = prob
 
 
+def dict_update():
+    file_ = open('dict_data.py', 'w')
+    file_.write('TRIE = '+str(TRIE))
+    file_.close
+
+
 def trie_search(word):
-    ref = trie
+    ref = TRIE
     for char in word:
         if char not in ref:
             return False
         ref = ref[char]
-    return True
-
-
-f = open('dict.txt', 'r')
-for line in f.readlines():
-    word, prob = line.split()[:2]
-    trie_add(word, prob)
-print(trie)
-
-#print(trie_search('哈'))
-#print(trie_search('妈'))
-#print(trie_search('呵呵'))
-#print(trie_search('整数'))
-#print(trie_search('电脑'))
+    return ref['']

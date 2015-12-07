@@ -8,6 +8,7 @@ PROB_START = numpy.array(prob_start.P)
 PROB_TRANS = numpy.array(prob_trans.P)
 PROB_EMIT = prob_emit.P
 MINPROB = -3.14e+100
+SPLIT_PUNCS = ['，', '。', '？', '！', '…', '：', '（', '）', '“', '”']
 
 
 def viterbi(sentence):
@@ -42,18 +43,49 @@ def viterbi(sentence):
 
     return ''.join(label[::-1])
 
+def no_split_punc(line):
+    for i in range(len(line)):
+        if line[i] in SPLIT_PUNCS:
+            return i
+    return -1
 
-def main(filename):
+
+def file_to_sentence(filename):
     input_file = open(filename, 'r')
-    line = input_file.readline().strip()
-    while line:
-        label = viterbi(line)
-        for i in range(len(line)):
-            print(line[i], end='')
-            if label[i] in ['E', 'S']:
-                print(' ', end='')
-        print('')
-        line = input_file.readline().strip()
+    lines = []
+    while True:
+        line = input_file.readline()
+        if not line:
+            newline = ''.join(lines)
+            output(newline)
+            break
+        line = line.strip().replace('\n', '')
+        pos = no_split_punc(line)
+        lines.append(line)
+        while pos != -1:
+            line = lines[-1][pos:]
+            lines[-1] = lines[-1][:pos]
+            newline = ''.join(lines)
+            output(newline)
+            print(line[0])
+            line = line[1:]
+            lines = [line]
+            pos = no_split_punc(line)
 
 
-main('input')
+def output(line):
+    if line == '':
+        return None
+    label = viterbi(line)
+    for i in range(len(line)):
+        print(line[i], end='')
+        if label[i] in ['E', 'S']:
+            print(' ', end='')
+    print('')
+
+
+file_to_sentence('input')
+
+
+#if __name__ != '__main__':
+#    main('input')
