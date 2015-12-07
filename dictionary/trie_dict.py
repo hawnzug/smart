@@ -7,7 +7,7 @@ def trie_add(word, prob):
     '''Add word, probability into the dictionary and return True.
 If the word already exists in the dictionary, return False.'''
     ref = TRIE
-    if not trie_search(word):
+    if trie_search(word) == -1:
         for char in word:
             if char not in ref:
                 ref[char] = {}
@@ -21,7 +21,7 @@ If the word already exists in the dictionary, return False.'''
 def trie_delete(word):
     '''Delete word, probability from the dictionary and return True.
 If the word doesn't exist in the dictionary, return False.'''
-    if trie_search(word):
+    if trie_search(word) != -1:
         ref = TRIE
         for char in word:
             if len(ref[char]) == 1:
@@ -41,11 +41,11 @@ If not, return False.'''
     ref = TRIE
     for char in word:
         if char not in ref:
-            return False
+            return -1
         else:
             ref = ref[char]
     if 0 not in ref:
-        return False
+        return -1
     else:
         return ref[0]
 
