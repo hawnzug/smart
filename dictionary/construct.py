@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 TRIE = {}
-def construct(txtfile='dict.txt', pyfile='dictionary.py'):
+def construct(txtfile='dict.txt', pyfile='dict.py'):
     file_ = open(txtfile, 'r')
     lines = file_.readlines()
     for line in lines:
@@ -18,7 +18,7 @@ def trie_add(word, prob):
         if char not in ref:
             ref[char] = {}
         ref = ref[char]
-    ref[''] = prob
+    ref[0] = prob
 
 
 if __name__ == '__main__':
