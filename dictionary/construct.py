@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 TRIE = {}
-def construct(txtfile='dict.txt', pyfile='dict.py'):
+def construct(txtfile='dict.txt', pyfile='dictionary.py'):
     file_ = open(txtfile, 'r')
     lines = file_.readlines()
     for line in lines:
