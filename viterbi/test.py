@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import viterbi.prob_emit
 import viterbi.prob_start
 import viterbi.prob_trans

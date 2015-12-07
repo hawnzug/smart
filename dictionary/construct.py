@@ -8,6 +8,7 @@ def construct(txtfile='dict.txt', pyfile='dictionary.py'):
         trie_add(split_line[0], int(split_line[1]))
     file_.close()
     file_ = open(pyfile, 'w')
+    file_.write('# -*- coding: utf-8 -*-\n')
     file_.write('TRIE = '+str(TRIE))
     file_.close
 
