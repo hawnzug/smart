@@ -1,19 +1,27 @@
-import numpy
 import viterbi.prob_emit
 import viterbi.prob_start
 import viterbi.prob_trans
 
 
-PROB_START = numpy.array(viterbi.prob_start.P)
-PROB_TRANS = numpy.array(viterbi.prob_trans.P)
+PROB_START = viterbi.prob_start.P
+PROB_TRANS = viterbi.prob_trans.P
 PROB_EMIT = viterbi.prob_emit.P
 MINPROB = -3.14e+100
 
 
+def init_array(x, y):
+    array = []
+    for i in range(x):
+        array.append([])
+        for j in range(y):
+            array[i].append(0)
+    return array
+
+
 def viterbi(sentence):
     length = len(sentence)
-    weight = numpy.zeros((length, 4))
-    path = numpy.zeros((length, 4))
+    weight = init_array(length, 4)
+    path = init_array(length, 4)
     for i in range(4):
         weight[0][i] = PROB_START[i] + PROB_EMIT[i].get(sentence[0], MINPROB)
     for i in range(1, length):
@@ -36,6 +44,3 @@ def viterbi(sentence):
         label.append(table[int(pos)])
         pos = path[i][pos]
     return ''.join(label[::-1])
-
-
-
