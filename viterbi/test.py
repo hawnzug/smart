@@ -45,3 +45,16 @@ def viterbi(sentence):
         label.append(table[int(pos)])
         pos = path[i][pos]
     return ''.join(label[::-1])
+
+
+def output(line):
+    split_line = ['']
+    if line == '': return split_line
+    label = viterbi(line)
+    j = 0
+    for i in range(len(line)):
+        split_line[j] += line[i]
+        if label[i] in ['E', 'S']:
+            j += 1
+            split_line.append('')
+    return split_line

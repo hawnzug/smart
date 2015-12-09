@@ -1,20 +1,7 @@
-import viterbi.test
+from viterbi import test
 
 
-def output(line):
-    split_line = ['']
-    if line == '': return split_line
-    label = viterbi.test.viterbi(line)
-    j = 0
-    for i in range(len(line)):
-        split_line[j] += line[i]
-        if label[i] in ['E', 'S']:
-            j += 1
-            split_line.append('')
-    return split_line
-
-
-def test(filename):
+def segmentation(filename):
     SPLIT_PUNCS = ['，', '。', '？', '！', '…', '：', '（', '）']
     def no_split_punc(line):
         for i in range(len(line)):
@@ -27,7 +14,7 @@ def test(filename):
         line = input_file.readline()
         if not line:
             newline = ''.join(lines)
-            print(output(newline))
+            print(test.output(newline))
             break
         line = line.strip().replace('\n', '')
         pos = no_split_punc(line)
@@ -36,7 +23,7 @@ def test(filename):
             line = lines[-1][pos:]
             lines[-1] = lines[-1][:pos]
             newline = ''.join(lines)
-            print(output(newline))
+            print(test.output(newline))
             print(line[0])
             line = line[1:]
             lines = [line]
@@ -44,4 +31,4 @@ def test(filename):
 
 
 if __name__ == '__main__':
-    test('input')
+    segmentation('input')
