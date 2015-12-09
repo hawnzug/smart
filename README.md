@@ -15,5 +15,6 @@ second part, written by Zhuyang Wang.
 
 The second part is based on HMM(Hidden Markov Model) and Viterbi algorithm.
 
+## Dictionary
 The HMM model and initial dictionary is from [结巴中文分词](https://github.com/fxsjy/jieba).
 Recently expand the dictionary from [Here](http://download.csdn.net/detail/logken/3575376). Now the dict has 665466 words.
