@@ -50,6 +50,21 @@ If not, return False.'''
         return ref[0]
 
 
+def list_all():
+    result = []
+    word = []
+    def recursive(ref):
+        for char in ref:
+            if char == 0:
+                result.append(''.join(word))
+            else:
+                word.append(char)
+                recursive(ref[char])
+                del word[-1]
+    recursive(TRIE)
+    return result
+
+
 def dict_update(filename='dictionary.py'):
     '''Update the dictionary, store it in dictionary.py.'''
     file_ = open(filename, 'w')
