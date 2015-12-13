@@ -6,98 +6,121 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>633</width>
-    <height>379</height>
+    <width>504</width>
+    <height>318</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Dictionary</string>
   </property>
-  <widget class="QLineEdit" name="search_line">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>30</y>
-     <width>271</width>
-     <height>32</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="add_button">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>90</y>
-     <width>91</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="delete_button">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>140</y>
-     <width>91</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Delete</string>
-   </property>
-  </widget>
-  <widget class="QListWidget" name="dict_view">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>331</width>
-     <height>341</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="undo_button">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>240</y>
-     <width>91</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Undo</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="sort_button">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>190</y>
-     <width>91</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Sort</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="save_button">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>290</y>
-     <width>91</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Exit</string>
-   </property>
-  </widget>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QListWidget" name="dict_view">
+     <property name="minimumSize">
+      <size>
+       <width>300</width>
+       <height>300</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLineEdit" name="search_line">
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="0">
+        <widget class="QPushButton" name="add_button">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Add</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="save_button">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Save</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="undo_button">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Undo</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="sort_button">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Sort</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="exit_button">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Exit</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="delete_button">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Delete</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

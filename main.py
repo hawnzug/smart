@@ -2,6 +2,8 @@ import sys
 from PyQt4 import QtCore, QtGui
 from main_window import Ui_smart_window
 from form_dict import Ui_dict_form
+from form_inst import Ui_instruction_form
+from form_cprt import Ui_copyright_form
 import mssegv2
 
 
@@ -34,6 +36,14 @@ class StartQT4(QtGui.QMainWindow):
         menu_lexicon = self.ui.menubar.addMenu('&Dict')
         menu_lexicon.addAction(action_handle_dict)
 
+        action_instruction = QtGui.QAction('Instruction', self)
+        self.connect(action_instruction, QtCore.SIGNAL('triggered()'), self.instruction)
+        action_copyright = QtGui.QAction('Copyright', self)
+        self.connect(action_copyright, QtCore.SIGNAL('triggered()'), self.copyright)
+
+        menu_help = self.ui.menubar.addMenu('&Help')
+        menu_help.addAction(action_instruction)
+        menu_help.addAction(action_copyright)
 
     def file_open(self):
         self.filename = QtGui.QFileDialog(self).getOpenFileName()
@@ -62,6 +72,14 @@ class StartQT4(QtGui.QMainWindow):
         self.dictform = DictForm()
         self.dictform.show()
 
+    def instruction(self):
+        self.instform = InstForm()
+        self.instform.show()
+
+    def copyright(self):
+        self.cprtform = CprtForm()
+        self.cprtform.show()
+
 
 class DictForm(QtGui.QWidget):
     def __init__(self, parent=None):
@@ -74,11 +92,14 @@ class DictForm(QtGui.QWidget):
         QtCore.QObject.connect(self.ui.delete_button, QtCore.SIGNAL('clicked()'), self.delete)
         QtCore.QObject.connect(self.ui.sort_button, QtCore.SIGNAL('clicked()'), self.sort)
         QtCore.QObject.connect(self.ui.undo_button, QtCore.SIGNAL('clicked()'), self.undo)
+        QtCore.QObject.connect(self.ui.save_button, QtCore.SIGNAL('clicked()'), self.save)
+        QtCore.QObject.connect(self.ui.exit_button, QtCore.SIGNAL('clicked()'), self.close)
         QtCore.QObject.connect(self.ui.search_line, QtCore.SIGNAL('textEdited(const QString&)'), self.search)
 
         self.ui.undo_button.setEnabled(False)
         self.ui.delete_button.setEnabled(False)
         self.ui.add_button.setEnabled(False)
+        self.ui.save_button.setEnabled(False)
         lexicon = mssegv2.list_all()
         self.ui.dict_view.addItems(lexicon)
         self.ui.dict_view.itemClicked.connect(self.select)
@@ -117,6 +138,8 @@ class DictForm(QtGui.QWidget):
             self.ui.delete_button.setEnabled(True)
             self.ui.add_button.setEnabled(False)
             self.ui.sort_button.setEnabled(True)
+            self.ui.save_button.setEnabled(True)
+            self.ui.exit_button.setEnabled(False)
 
     def delete(self):
         item = self.ui.dict_view.currentItem()
@@ -128,6 +151,8 @@ class DictForm(QtGui.QWidget):
             self.ui.delete_button.setEnabled(False)
             self.ui.add_button.setEnabled(True)
             self.ui.dict_view.clearSelection()
+            self.ui.save_button.setEnabled(True)
+            self.ui.exit_button.setEnabled(False)
 
     def undo(self):
         item, flag = self.undo_list.pop()
@@ -136,6 +161,7 @@ class DictForm(QtGui.QWidget):
             self.ui.dict_view.addItem(item)
             self.ui.dict_view.scrollToItem(item)
             self.ui.dict_view.setCurrentItem(item)
+            self.ui.search_line.setText(item.text())
             self.ui.delete_button.setEnabled(True)
             self.ui.add_button.setEnabled(False)
             if self.undo_list == []:
@@ -150,7 +176,9 @@ class DictForm(QtGui.QWidget):
             self.ui.dict_view.clearSelection()
             if self.undo_list == []:
                 self.ui.undo_button.setEnabled(False)
-
+        if self.undo_list == []:
+            self.ui.save_button.setEnabled(False)
+            self.ui.exit_button.setEnabled(True)
 
     def sort(self):
         item = self.ui.dict_view.currentItem()
@@ -158,6 +186,24 @@ class DictForm(QtGui.QWidget):
         self.ui.dict_view.scrollToItem(item)
         self.ui.dict_view.setCurrentItem(item)
         self.ui.sort_button.setEnabled(False)
+
+    def save(self):
+        mssegv2.dict_update('resultA.py')
+        self.ui.exit_button.setEnabled(True)
+
+
+class InstForm(QtGui.QWidget):
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self, parent)
+        self.ui = Ui_instruction_form()
+        self.ui.setupUi(self)
+
+
+class CprtForm(QtGui.QWidget):
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self, parent)
+        self.ui = Ui_copyright_form()
+        self.ui.setupUi(self)
 
 
 if __name__ == "__main__":
