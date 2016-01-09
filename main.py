@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 import sys
 from PyQt4 import QtCore, QtGui
-from main_window import Ui_smart_window
-from form_dict import Ui_dict_form
-from form_inst import Ui_instruction_form
-from form_cprt import Ui_copyright_form
-import mssegv2
+from windows.main_window import Ui_smart_window
+from windows.form_dict import Ui_dict_form
+from windows.form_inst import Ui_instruction_form
+from windows.form_cprt import Ui_copyright_form
+import segment
 
 
 class StartQT4(QtGui.QMainWindow):
@@ -66,7 +67,7 @@ class StartQT4(QtGui.QMainWindow):
 
     def segment(self):
         string = self.ui.text_input.toPlainText()
-        self.ui.text_output.setText(mssegv2.main(string))
+        self.ui.text_output.setText('|'.join(segment.main(string)))
 
     def handle_dict(self):
         self.dictform = DictForm()
@@ -100,7 +101,7 @@ class DictForm(QtGui.QWidget):
         self.ui.delete_button.setEnabled(False)
         self.ui.add_button.setEnabled(False)
         self.ui.save_button.setEnabled(False)
-        lexicon = mssegv2.list_all()
+        lexicon = segment.mmseg.list_all()
         self.ui.dict_view.addItems(lexicon)
         self.ui.dict_view.itemClicked.connect(self.select)
 
@@ -111,7 +112,7 @@ class DictForm(QtGui.QWidget):
        
     def search(self):
         word = self.ui.search_line.text().strip()
-        if mssegv2.trie_search(word) != -1:
+        if segment.mmseg.trie_search(word) != -1:
             item = self.ui.dict_view.findItems(word, QtCore.Qt.MatchExactly)[0]
             self.ui.dict_view.scrollToItem(item)
             self.ui.dict_view.setCurrentItem(item)
@@ -127,7 +128,7 @@ class DictForm(QtGui.QWidget):
 
     def add(self):
         word = self.ui.search_line.text().strip()
-        if word != '' and mssegv2.trie_add(word, 0):
+        if word != '' and segment.mmseg.trie_add(word, 0):
             item = QtGui.QListWidgetItem()
             item.setText(word)
             self.ui.dict_view.addItem(item)
@@ -144,7 +145,7 @@ class DictForm(QtGui.QWidget):
     def delete(self):
         item = self.ui.dict_view.currentItem()
         word = item.text()
-        if word != '' and mssegv2.trie_delete(word):
+        if word != '' and segment.mmseg.trie_delete(word):
             self.undo_list.append((item, True))
             self.ui.dict_view.takeItem(self.ui.dict_view.currentRow())
             self.ui.undo_button.setEnabled(True)
@@ -157,7 +158,7 @@ class DictForm(QtGui.QWidget):
     def undo(self):
         item, flag = self.undo_list.pop()
         if flag:
-            mssegv2.trie_add(item.text(), 0)
+            segment.mmseg.trie_add(item.text(), 0)
             self.ui.dict_view.addItem(item)
             self.ui.dict_view.scrollToItem(item)
             self.ui.dict_view.setCurrentItem(item)
@@ -168,7 +169,7 @@ class DictForm(QtGui.QWidget):
                 self.ui.undo_button.setEnabled(False)
             self.ui.sort_button.setEnabled(True)
         else:
-            mssegv2.trie_delete(item.text())
+            segment.mmseg.trie_delete(item.text())
             self.ui.dict_view.takeItem(self.ui.dict_view.indexFromItem(item).row())
             self.ui.search_line.setText(item.text())
             self.ui.delete_button.setEnabled(False)
@@ -188,7 +189,7 @@ class DictForm(QtGui.QWidget):
         self.ui.sort_button.setEnabled(False)
 
     def save(self):
-        mssegv2.dict_update('resultA.py')
+        segment.mmseg.dict_update('resultA.py')
         self.ui.exit_button.setEnabled(True)
 
 
