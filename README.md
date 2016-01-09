@@ -1,9 +1,16 @@
 # Smartsegmentation
 
 ## Yet another Chinese word segmentation in Python
-Final project of this semester(Unfinished).
+Final project of this semester.
 
 This project is cooperated by **Chaoran Xu**, **Pihe Hu**, and **Zhuyang Wang**.
+
+## Install and Run
+Dependence: PyQt4
+
+GUI: `main.py`
+
+Or you can just `import segment` and use the function `main(string)`
 
 ## GUI
 Using PyQt4
@@ -23,19 +30,15 @@ The HMM model and initial lexicon is from [结巴中文分词](https://github.co
 
 Recently expand the lexicon from [Here](http://download.csdn.net/detail/logken/3575376).
 
-The lexicon used by MMSEG is written by Zhuyang Wang.
+The lexicon is written by Zhuyang Wang.
 
-Combine 10+ different lexicons together into a file *dict.txt*.
+Combine 10+ different lexicons together into a file `dict.txt`.
 
-*dict.txt* has two columns, the first is words or single character, the second is the corresponding probability.
+`dict.txt` has two columns, the first is words or single character, the second is the corresponding probability.
 
-Since MMSEG system only needs the probability of one single character,
-so the probability of the word more than 2 characters is set to 0.
+We use **Trie**, which is also called prefix tree, to store the lexicon.
 
-Then it is stored in a Python's dictionary named TRIE. Because the final lexicon is stored in a special data structure
-called **Trie**(前缀树), which can undermine the total size of the lexicon.
-
-In Trie, a vertex represents a single character, and all the words that begin with this character is stored under this
-Trie recursively.
-
-For example......
+In Trie, all the descendants of a node have a common prefix associated with that
+node, and the root is associated with the empty string. And every node stores
+one Chinese character, while every leaf stores a number, which is exactly the
+value of its prefix.
