@@ -81,5 +81,8 @@ def main(lines):
     return final
 
 
+def test():
+    print(' '.join(main(open("input.txt", encoding="utf-8").read())))
+
 if __name__ == '__main__':
     test()

@@ -128,7 +128,7 @@ class DictForm(QtGui.QWidget):
 
     def add(self):
         word = self.ui.search_line.text().strip()
-        if word != '' and segment.mmseg.trie_add(word, 0):
+        if word != '' and segment.mmseg.trie_add(word, 1000):
             item = QtGui.QListWidgetItem()
             item.setText(word)
             self.ui.dict_view.addItem(item)
@@ -158,7 +158,7 @@ class DictForm(QtGui.QWidget):
     def undo(self):
         item, flag = self.undo_list.pop()
         if flag:
-            segment.mmseg.trie_add(item.text(), 0)
+            segment.mmseg.trie_add(item.text(), 1000)
             self.ui.dict_view.addItem(item)
             self.ui.dict_view.scrollToItem(item)
             self.ui.dict_view.setCurrentItem(item)
